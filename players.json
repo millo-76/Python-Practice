@@ -1,9 +1,9 @@
 {
     "codie": {
-        "hits": 4,
-        "at_bats": 5,
-        "walks": 1,
-        "runs": 3,
-        "average": 0.8
+        "hits": 13,
+        "at_bats": 18,
+        "walks": 3,
+        "runs": 10,
+        "average": 0.722
     }
 }
