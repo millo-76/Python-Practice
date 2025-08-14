@@ -1,9 +1,16 @@
 {
     "codie": {
-        "hits": 10,
-        "at_bats": 16,
+        "hits": 16,
+        "at_bats": 22,
         "walks": 3,
-        "runs": 9,
-        "average": 0.625
+        "runs": 13,
+        "average": 0.727
+    },
+    "everett": {
+        "hits": 4,
+        "at_bats": 5,
+        "walks": 1,
+        "runs": 3,
+        "average": 0.8
     }
 }
