@@ -84,3 +84,8 @@ cython_debug/
 
 # Windows
 Thumbs.db
+
+# Ignore all Python files in the root directory
+/*.py
+# Allow Python files in all subfolders
+!*/**/*.py
