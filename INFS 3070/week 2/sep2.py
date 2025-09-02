@@ -10,6 +10,6 @@ def compare_values(a, b):
         return "less"
     else:
         return "equal"
-
+    
 result = compare_values(var1, var2)
 print(f"Comparison result: {result}")
