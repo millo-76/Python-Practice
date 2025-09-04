@@ -3,6 +3,7 @@
 A repository for python practice and school assignments.
 
 ## Table of Contents
+
 - [About](#about)
 - [Folder Structure](#folder-structure)
 - [Baseball Program](#baseball-program)
@@ -12,17 +13,21 @@ A repository for python practice and school assignments.
 - [License](#license)
 
 ## About
+
 A repository for python practice and school assignments.
 
 ## Folder Structure
+
 - `baseball-program/` — All files for the baseball stats GUI project.
 - `INFS 3070/` — For school-related Python assignments.
 - (Root directory) — For general practice scripts or experiments.
 
 ## Baseball Program
+
 The `baseball-program/` folder contains a complete baseball stats GUI project, including its own README and all related files.
 
 ## School Assignments
+
 The `INFS 3070/` folder is for personal coursework and is not licensed for reuse.
 
 ## How to Use
