@@ -96,3 +96,22 @@ libffi-8.dll
 /*.py
 # Allow Python files in all subfolders
 !*/**/*.py
+
+# Ignore virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Ignore DLLs, Doc, and include folders
+*.dll
+DLLs/
+Doc/
+include/
+libs/
+Scripts/
+tcl/
+Tools/
+LICENSE.txt
+NEWS.txt
+pythonw.exe
