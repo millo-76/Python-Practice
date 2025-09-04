@@ -108,6 +108,13 @@ ENV/
 DLLs/
 Doc/
 include/
+
+# Ignore everything
+/*
+# But not these files/directories
+!/.gitignore
+!/Personal Programs/
+!/Personal Programs/**
 libs/
 Scripts/
 tcl/
