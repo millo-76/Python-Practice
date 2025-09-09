@@ -6,6 +6,7 @@ A repository for python practice and school assignments.
 
 - [About](#about)
 - [Folder Structure](#folder-structure)
+- [Personal Programs](#personal-programs)
 - [Baseball Program](#baseball-program)
 - [School Assignments](#school-assignments)
 - [How to Use](#how-to-use)
@@ -18,13 +19,22 @@ A repository for python practice and school assignments.
 
 ## Folder Structure
 
-- `baseball-program/` — All files for the baseball stats GUI project.
+- `Personal Programs/` — Your personal Python projects and scripts. Subfolders contain individual projects.
+	- `baseball-program/` — All files for the baseball stats GUI project.
+	- `test3.py` — Example personal script.
 - `INFS 3070/` — For school-related Python assignments.
-- (Root directory) — For general practice scripts or experiments.
+	- `Assignments/` — Contains assignment notebooks.
+	- `Weeks/` — Weekly folders for coursework, each with scripts and notebooks.
+		- `week 1/`, `week 2/`, `week 3/` — Weekly materials.
+- (Root directory) — For environment files and configuration only.
 
 ## Baseball Program
 
 The `baseball-program/` folder contains a complete baseball stats GUI project, including its own README and all related files.
+
+## Personal Programs
+
+The `Personal Programs/` folder is for your own Python projects and experiments. Each subfolder is a separate project, and you can add scripts directly or organize by project as needed.
 
 ## School Assignments
 
