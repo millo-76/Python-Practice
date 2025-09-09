@@ -115,6 +115,9 @@ include/
 !/.gitignore
 !/Personal Programs/
 !/Personal Programs/**
+!/README.md
+!/INFS 3070/
+!/INFS 3070/**
 libs/
 Scripts/
 tcl/
