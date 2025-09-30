@@ -19,14 +19,46 @@ A repository for python practice and school assignments.
 
 ## Folder Structure
 
-- `Personal Programs/` — Your personal Python projects and scripts. Subfolders contain individual projects.
-	- `baseball-program/` — All files for the baseball stats GUI project.
-	- `test3.py` — Example personal script.
-- `INFS 3070/` — For school-related Python assignments.
-	- `Assignments/` — Contains assignment notebooks.
-	- `Weeks/` — Weekly folders for coursework, each with scripts and notebooks.
-		- `week 1/`, `week 2/`, `week 3/` — Weekly materials.
-- (Root directory) — For environment files and configuration only.
+```
+Personal Programs/
+	baseball-program/
+		.venv/
+		test4.py
+	test3.py
+INFS 3070/
+	Assignments/
+		homework2.ipynb
+		MarlinJaramilloHW1.ipynb
+	Weeks/
+		week 1/
+			aug26.py
+			test.py
+			testj.ipynb
+		week 2/
+			sep2.py
+			Week2.ipynb
+		week 3/
+			week3.ipynb
+		week 4/
+			test.py
+			week4.ipynb
+		week 5/
+			week5.ipynb
+		week 6/
+			example.txt
+			week6.ipynb
+```
+
+**Personal Programs/**: Your personal Python projects and scripts. Subfolders contain individual projects.
+	- **baseball-program/**: All files for the baseball stats GUI project.
+	- **test3.py**: Example personal script.
+
+**INFS 3070/**: For school-related Python assignments.
+	- **Assignments/**: Contains assignment notebooks.
+	- **Weeks/**: Weekly folders for coursework, each with scripts and notebooks.
+		- **week 1** to **week 6**: Weekly materials, scripts, and notebooks.
+
+**(Root directory)**: For environment files and configuration only.
 
 ## Baseball Program
 
