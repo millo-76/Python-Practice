@@ -47,6 +47,37 @@ Personal Programs/
 		.venv/
 		test4.py
 	test3.py
+# Python Workspace
+
+This workspace contains personal Python projects and course materials for INFS 3070. Local environment files (executables, DLLs, and virtual environments) may be present in the workspace but are ignored by Git via `.gitignore`. Only project code and notebooks in tracked folders should be pushed to GitHub.
+
+## Table of contents
+
+- [About](#about)
+- [Folder structure](#folder-structure)
+- [Personal Programs](#personal-programs)
+- [INFS 3070](#infs-3070)
+- [How to run](#how-to-run)
+- [Contributing](#contributing)
+- [License](#license)
+
+## About
+
+This repository stores two main categories of content:
+
+- Personal projects under `Personal Programs/`.
+- Course materials for INFS 3070 under `INFS 3070/` (these are personal coursework and not for redistribution).
+
+## Folder structure
+
+Snapshot of the main folders and representative files:
+
+```text
+Personal Programs/
+	baseball-program/
+		.venv/
+		test4.py
+	test3.py
 INFS 3070/
 	README.md
 	Assignments/
