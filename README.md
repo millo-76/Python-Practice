@@ -16,11 +16,9 @@ A repository for python practice and school assignments.
 ## About
 
 A repository for python practice and school assignments.
-
-## Folder Structure
 # Python Workspace
 
-This workspace contains personal Python projects and course materials for INFS 3070. Local environment files (executables, DLLs, and virtual environments) may be present in the workspace but are ignored by Git via `.gitignore`. Only project code and notebooks in the tracked folders should be pushed to GitHub.
+This workspace contains personal Python projects and course materials for INFS 3070. Local environment files (executables, DLLs, and virtual environments) may be present here but are ignored by Git via `.gitignore`. Only project code and notebooks inside tracked folders should be pushed to GitHub.
 
 ## Table of contents
 
@@ -41,7 +39,7 @@ This repository stores two main categories of content:
 
 ## Folder structure
 
-Snapshot of main folders and representative files:
+Snapshot of the main folders and representative files:
 
 ```text
 Personal Programs/
@@ -94,7 +92,7 @@ Course materials, weekly exercises, and assignment notebooks. See `INFS 3070/Wee
 2. To run a script with the workspace Python executable on Windows:
 
 ```powershell
-"C:/Users/marja/OneDrive/Desktop/Code/Pyton Workspace/python.exe" path\\to\\script.py
+"C:/Users/marja/OneDrive/Desktop/Code/Pyton Workspace/python.exe" path\to\script.py
 ```
 
 3. To run notebooks, make sure `jupyter` and `ipykernel` are installed in the selected interpreter and choose that kernel in VS Code.
@@ -106,4 +104,4 @@ Course materials, weekly exercises, and assignment notebooks. See `INFS 3070/Wee
 ## License
 
 Most repository content is released under the MIT License. Course assignment materials are not licensed for public reuse.
-Most repository content is released under the MIT License. Course assignment materials are not licensed for public reuse.
+
