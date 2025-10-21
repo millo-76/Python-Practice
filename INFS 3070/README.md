@@ -4,7 +4,7 @@
 
 ### Intro to the environment and jupyter
 
-#### Files
+#### Files Week 1
 
 aug26.py
 test.py
@@ -18,3 +18,13 @@ testj.ipynb
 
 sep2.py
 Week2.ipynb
+
+## Week 3
+
+### User input and conditionals
+
+#### Files Week 3
+
+week3.ipynb
+
+## Week 4

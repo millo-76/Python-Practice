@@ -18,14 +18,39 @@ A repository for python practice and school assignments.
 A repository for python practice and school assignments.
 
 ## Folder Structure
+# Python Workspace
 
-```
+This workspace contains personal Python projects and course materials for INFS 3070. Local environment files (executables, DLLs, and virtual environments) may be present in the workspace but are ignored by Git via `.gitignore`. Only project code and notebooks in the tracked folders should be pushed to GitHub.
+
+## Table of contents
+
+- [About](#about)
+- [Folder structure](#folder-structure)
+- [Personal Programs](#personal-programs)
+- [INFS 3070](#infs-3070)
+- [How to run](#how-to-run)
+- [Contributing](#contributing)
+- [License](#license)
+
+## About
+
+This repository stores two main categories of content:
+
+- Personal projects under `Personal Programs/`.
+- Course materials for INFS 3070 under `INFS 3070/` (these are personal coursework and not for redistribution).
+
+## Folder structure
+
+Snapshot of main folders and representative files:
+
+```text
 Personal Programs/
 	baseball-program/
 		.venv/
 		test4.py
 	test3.py
 INFS 3070/
+	README.md
 	Assignments/
 		homework2.ipynb
 		MarlinJaramilloHW1.ipynb
@@ -49,44 +74,36 @@ INFS 3070/
 			week6.ipynb
 ```
 
-**Personal Programs/**: Your personal Python projects and scripts. Subfolders contain individual projects.
-	- **baseball-program/**: All files for the baseball stats GUI project.
-	- **test3.py**: Example personal script.
+Notes:
 
-**INFS 3070/**: For school-related Python assignments.
-	- **Assignments/**: Contains assignment notebooks.
-	- **Weeks/**: Weekly folders for coursework, each with scripts and notebooks.
-		- **week 1** to **week 6**: Weekly materials, scripts, and notebooks.
-
-**(Root directory)**: For environment files and configuration only.
-
-## Baseball Program
-
-The `baseball-program/` folder contains a complete baseball stats GUI project, including its own README and all related files.
+- Put personal projects in `Personal Programs/` — use one subfolder per project.
+- Course materials are under `INFS 3070/` and represent personal coursework.
+- Local environment/runtime files (for example `python.exe`, `DLLs/`, `Lib/`, `include/`, `Scripts/`, `.venv/`) are local-only and ignored by Git.
 
 ## Personal Programs
 
-The `Personal Programs/` folder is for your own Python projects and experiments. Each subfolder is a separate project, and you can add scripts directly or organize by project as needed.
+Store standalone projects here. Each project should include a README and any environment instructions.
 
-## School Assignments
+## INFS 3070
 
-The `INFS 3070/` folder is for personal coursework and is not licensed for reuse.
+Course materials, weekly exercises, and assignment notebooks. See `INFS 3070/Weeks/` for per-week materials.
 
-## How to Use
+## How to run
 
-- To run a Python script:
-	```bash
-	python3 script.py
-	```
-- To copy (clone) this repository:
-	```bash
-	git clone https://github.com/millo-76/Python-Practice.git
-	```
-- Add your own practice scripts to the root directory or create new folders as needed.
-- For the baseball program, see the `baseball-program/README-baseball.md` for details.
+1. Select a Python interpreter in VS Code that has the necessary packages installed.
+2. To run a script with the workspace Python executable on Windows:
+
+```powershell
+"C:/Users/marja/OneDrive/Desktop/Code/Pyton Workspace/python.exe" path\\to\\script.py
+```
+
+3. To run notebooks, make sure `jupyter` and `ipykernel` are installed in the selected interpreter and choose that kernel in VS Code.
 
 ## Contributing
-Contributions are welcome for all parts of this repository except for the School Assignments folder, which contains personal coursework.
+
+- Contributions are welcome for general projects. Do not modify submitted coursework under `INFS 3070/`.
 
 ## License
-All code and content in this repository, except for the School Assignments folder, is released under the MIT License. School Assignments are not licensed for reuse.
+
+Most repository content is released under the MIT License. Course assignment materials are not licensed for public reuse.
+Most repository content is released under the MIT License. Course assignment materials are not licensed for public reuse.
