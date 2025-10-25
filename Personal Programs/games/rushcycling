@@ -1,0 +1,97 @@
+import pygame
+import random
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Screen setup
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("♻️ Recycle Rush")
+
+# Colors
+WHITE = (255, 255, 255)
+GREEN = (50, 205, 50)
+BLACK = (0, 0, 0)
+GRAY = (200, 200, 200)
+
+# Load images or use rectangles for simplicity
+player_img = pygame.Surface((80, 40))
+player_img.fill(GREEN)
+
+recycle_img = pygame.Surface((30, 30))
+recycle_img.fill((0, 150, 255))  # blue = recyclable
+
+trash_img = pygame.Surface((30, 30))
+trash_img.fill((150, 75, 0))  # brown = trash
+
+clock = pygame.time.Clock()
+font = pygame.font.SysFont("arial", 28)
+
+# Player setup
+player = pygame.Rect(WIDTH//2 - 40, HEIGHT - 60, 80, 40)
+speed = 8
+
+# Falling items
+items = []
+spawn_timer = 0
+score = 0
+
+# Game loop
+running = True
+while running:
+    screen.fill(WHITE)
+
+    # Event handling
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+    # Movement
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and player.left > 0:
+        player.x -= speed
+    if keys[pygame.K_RIGHT] and player.right < WIDTH:
+        player.x += speed
+
+    # Spawn new items
+    spawn_timer += 1
+    if spawn_timer > 25:
+        spawn_timer = 0
+        item_type = random.choice(["recycle", "trash"])
+        rect = pygame.Rect(random.randint(0, WIDTH - 30), -30, 30, 30)
+        items.append((item_type, rect))
+
+    # Move items
+    for i, (item_type, rect) in enumerate(items[:]):
+        rect.y += 6
+
+        # Collision detection
+        if rect.colliderect(player):
+            if item_type == "recycle":
+                score += 10
+            else:
+                score -= 5
+            items.remove((item_type, rect))
+
+        elif rect.y > HEIGHT:
+            items.remove((item_type, rect))
+
+    # Draw
+    screen.blit(player_img, player)
+
+    for item_type, rect in items:
+        if item_type == "recycle":
+            screen.blit(recycle_img, rect)
+        else:
+            screen.blit(trash_img, rect)
+
+    # HUD
+    score_text = font.render(f"Score: {score}", True, BLACK)
+    screen.blit(score_text, (10, 10))
+
+    # Update screen
+    pygame.display.flip()
+    clock.tick(60)

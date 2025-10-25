@@ -1,0 +1,329 @@
+import os
+import sqlite3
+import csv
+import ttkbootstrap as tb
+from ttkbootstrap.constants import *
+import tkinter as tk
+from tkinter import messagebox, filedialog
+
+DB_FILE = os.path.join(os.path.dirname(__file__), "wrestlers.db")
+
+
+def ensure_db_exists():
+    conn = sqlite3.connect(DB_FILE)
+    cur = conn.cursor()
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS wrestlers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            team TEXT,
+            weight_class TEXT,
+            wins INTEGER DEFAULT 0,
+            losses INTEGER DEFAULT 0,
+            points INTEGER DEFAULT 0,
+            notes TEXT
+        )
+        """
+    )
+    conn.commit()
+    conn.close()
+
+class WrestlerTracker(tb.Window):
+    def __init__(self):
+        super().__init__(title="Wrestler Tracker", themename="darkly")
+        self.geometry("620x460")
+        self.resizable(False, False)
+        ensure_db_exists()
+        self.create_widgets()
+
+    def create_widgets(self):
+        frm = tb.Frame(self, padding=15)
+        frm.pack(fill=BOTH, expand=True)
+
+        labels = ["Name", "Team", "Weight class", "Wins", "Losses", "Total Points Scored", "Notes"]
+        self.entries = {}
+        for i, lbl in enumerate(labels):
+            tb.Label(frm, text=lbl).grid(row=i, column=0, sticky=W, pady=5)
+            entry = tb.Entry(frm, width=40)
+            entry.grid(row=i, column=1, padx=10, pady=5)
+            self.entries[lbl] = entry
+
+        btn_frame = tb.Frame(frm)
+        btn_frame.grid(row=len(labels), column=0, columnspan=2, pady=(20, 0))
+
+        tb.Button(btn_frame, text="💾 Save", bootstyle=SUCCESS, command=self.save_record).grid(row=0, column=0, padx=6)
+        tb.Button(btn_frame, text="📋 Show Records", bootstyle=INFO, command=self.show_records).grid(row=0, column=1, padx=6)
+        tb.Button(btn_frame, text="📤 Export CSV", bootstyle=PRIMARY, command=self.export_csv).grid(row=0, column=2, padx=6)
+        tb.Button(btn_frame, text="🧹 Clear Fields", bootstyle=SECONDARY, command=self.clear_fields).grid(row=0, column=3, padx=6)
+
+    def save_record(self):
+        name = self.entries["Name"].get().strip()
+        if not name:
+            messagebox.showwarning("Missing data", "Please enter the wrestler's name.")
+            return
+
+        wins = self.entries["Wins"].get().strip()
+        losses = self.entries["Losses"].get().strip()
+
+        try:
+            wins_val = int(wins) if wins else 0
+            losses_val = int(losses) if losses else 0
+        except ValueError:
+            messagebox.showerror("Invalid input", "Wins and Losses must be integers.")
+            return
+
+        points = self.entries["Total Points Scored"].get().strip()
+        try:
+            points_val = int(points) if points else 0
+        except ValueError:
+            messagebox.showerror("Invalid input", "Total Points Scored must be an integer.")
+            return
+
+        conn = sqlite3.connect(DB_FILE)
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO wrestlers (name, team, weight_class, wins, losses, points, notes) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (
+                name,
+                self.entries["Team"].get().strip(),
+                self.entries["Weight class"].get().strip(),
+                wins_val,
+                losses_val,
+                points_val,
+                self.entries["Notes"].get().strip() if "Notes" in self.entries else None,
+            ),
+        )
+        conn.commit()
+        conn.close()
+        messagebox.showinfo("Saved", f"Saved {name} to records.")
+        self.clear_fields()
+
+    def show_records(self):
+        import tkinter as tk
+
+        win = tb.Toplevel(self)
+        win.title("Saved Wrestlers")
+        win.geometry("900x500")
+
+        # Top: search/filter frame
+        topfrm = tb.Frame(win, padding=8)
+        topfrm.pack(fill=tk.X)
+        tb.Label(topfrm, text="Search:").pack(side=tk.LEFT, padx=(0, 6))
+        search_var = tk.StringVar()
+        search_entry = tb.Entry(topfrm, textvariable=search_var, width=40)
+        search_entry.pack(side=tk.LEFT)
+
+        def on_search(*_):
+            q = search_var.get().strip()
+            load_records(q)
+
+        search_entry.bind("<Return>", on_search)
+        tb.Button(topfrm, text="Clear", bootstyle=SECONDARY, command=lambda: (search_var.set(""), load_records(None))).pack(side=tk.LEFT, padx=6)
+
+        # Center: treeview with scrollbars
+        tree_frame = tb.Frame(win)
+        tree_frame.pack(fill=tk.BOTH, expand=True, padx=8, pady=6)
+
+        cols = ["id", "Name", "Team", "WeightClass", "Wins", "Losses", "Points", "Notes"]
+        tree = tb.Treeview(tree_frame, columns=cols, show="headings", bootstyle=INFO)
+        # Configure headings and enable click-to-sort
+        col_map = {
+            "id": "id",
+            "Name": "name",
+            "Team": "team",
+            "WeightClass": "weight_class",
+            "Wins": "wins",
+            "Losses": "losses",
+            "Points": "points",
+            "Notes": "notes",
+        }
+
+        def sort_column(col, reverse=False):
+            # Sort the tree contents by given column (string values)
+            l = [(tree.set(k, col), k) for k in tree.get_children("")]
+            try:
+                l.sort(key=lambda t: int(t[0]) if t[0].isdigit() else t[0], reverse=reverse)
+            except Exception:
+                l.sort(reverse=reverse)
+            for index, (_, k) in enumerate(l):
+                tree.move(k, "", index)
+            # reverse sort next time
+            tree.heading(col, command=lambda: sort_column(col, not reverse))
+
+        for c in cols:
+            heading = c if c != "id" else "ID"
+            tree.heading(c, text=heading, command=lambda _c=c: sort_column(_c, False))
+            # set sensible widths
+            if c == "id":
+                tree.column(c, width=40, anchor=W)
+            elif c in ("Wins", "Losses", "Points"):
+                tree.column(c, width=70, anchor=W)
+            elif c == "Notes":
+                tree.column(c, width=220, anchor=W)
+            else:
+                tree.column(c, width=120, anchor=W)
+
+        vsb = tb.Scrollbar(tree_frame, orient=tk.VERTICAL, command=tree.yview)
+        hsb = tb.Scrollbar(win, orient=tk.HORIZONTAL, command=tree.xview)
+        tree.configure(yscroll=vsb.set, xscroll=hsb.set)
+        tree.grid(row=0, column=0, sticky="nsew")
+        vsb.grid(row=0, column=1, sticky="ns")
+        tree_frame.grid_rowconfigure(0, weight=1)
+        tree_frame.grid_columnconfigure(0, weight=1)
+        hsb.pack(fill=tk.X, side=tk.BOTTOM)
+
+        # Context menu for edit/delete
+        menu = tk.Menu(win, tearoff=0)
+
+        def get_selected_id():
+            sel = tree.selection()
+            if not sel:
+                return None
+            vals = tree.item(sel[0], "values")
+            return vals[0]
+
+        def delete_selected():
+            sid = get_selected_id()
+            if not sid:
+                return
+            if not messagebox.askyesno("Delete", "Delete selected record?"):
+                return
+            conn = sqlite3.connect(DB_FILE)
+            cur = conn.cursor()
+            cur.execute("DELETE FROM wrestlers WHERE id=?", (sid,))
+            conn.commit()
+            conn.close()
+            load_records(search_var.get().strip() or None)
+
+        def edit_selected():
+            sid = get_selected_id()
+            if not sid:
+                return
+            conn = sqlite3.connect(DB_FILE)
+            cur = conn.cursor()
+            cur.execute("SELECT id, name, team, weight_class, wins, losses, points, notes FROM wrestlers WHERE id=?", (sid,))
+            row = cur.fetchone()
+            conn.close()
+            if not row:
+                return
+
+            # Open edit dialog
+            edit_win = tb.Toplevel(win)
+            edit_win.title("Edit wrestler")
+            edit_win.geometry("420x320")
+
+            labels = ["Name", "Team", "Weight class", "Wins", "Losses", "Points", "Notes"]
+            fields = {}
+            for i, lbl in enumerate(labels):
+                tb.Label(edit_win, text=lbl).grid(row=i, column=0, sticky=W, padx=8, pady=6)
+                ent = tb.Entry(edit_win, width=36)
+                ent.grid(row=i, column=1, padx=8, pady=6)
+                fields[lbl] = ent
+
+            # Populate
+            fields["Name"].insert(0, row[1])
+            fields["Team"].insert(0, row[2] or "")
+            fields["Weight class"].insert(0, row[3] or "")
+            fields["Wins"].insert(0, str(row[4]))
+            fields["Losses"].insert(0, str(row[5]))
+            fields["Points"].insert(0, str(row[6]))
+            fields["Notes"].insert(0, row[7] or "")
+
+            def save_edit():
+                try:
+                    wv = int(fields["Wins"].get() or 0)
+                    lv = int(fields["Losses"].get() or 0)
+                    pv = int(fields["Points"].get() or 0)
+                except ValueError:
+                    messagebox.showerror("Invalid", "Wins/Losses/Points must be integers.")
+                    return
+                conn = sqlite3.connect(DB_FILE)
+                cur = conn.cursor()
+                cur.execute(
+                    "UPDATE wrestlers SET name=?, team=?, weight_class=?, wins=?, losses=?, points=?, notes=? WHERE id=?",
+                    (
+                        fields["Name"].get().strip(),
+                        fields["Team"].get().strip(),
+                        fields["Weight class"].get().strip(),
+                        wv,
+                        lv,
+                        pv,
+                        fields["Notes"].get().strip(),
+                        sid,
+                    ),
+                )
+                conn.commit()
+                conn.close()
+                edit_win.destroy()
+                load_records(search_var.get().strip() or None)
+
+            tb.Button(edit_win, text="Save", bootstyle=SUCCESS, command=save_edit).grid(row=len(labels), column=0, columnspan=2, pady=10)
+
+        menu.add_command(label="Edit", command=edit_selected)
+        menu.add_command(label="Delete", command=delete_selected)
+
+        def on_right_click(event):
+            iid = tree.identify_row(event.y)
+            if iid:
+                tree.selection_set(iid)
+                menu.tk_popup(event.x_root, event.y_root)
+
+        tree.bind("<Button-3>", on_right_click)
+        # Double-click a row to open the edit dialog: select the row under the cursor then edit
+        def on_double_click(event):
+            iid = tree.identify_row(event.y)
+            if iid:
+                tree.selection_set(iid)
+                edit_selected()
+
+        tree.bind("<Double-1>", on_double_click)
+
+        def load_records(filter_q=None):
+            for r in tree.get_children():
+                tree.delete(r)
+            conn = sqlite3.connect(DB_FILE)
+            cur = conn.cursor()
+            if filter_q:
+                q = f"%{filter_q}%"
+                cur.execute(
+                    "SELECT id, name, team, weight_class, wins, losses, points, notes FROM wrestlers WHERE name LIKE ? OR team LIKE ? OR weight_class LIKE ? ORDER BY id DESC",
+                    (q, q, q),
+                )
+            else:
+                cur.execute(
+                    "SELECT id, name, team, weight_class, wins, losses, points, notes FROM wrestlers ORDER BY id DESC"
+                )
+            rows = cur.fetchall()
+            conn.close()
+            for row in rows:
+                tree.insert("", tk.END, values=row)
+
+        # Initial load
+        load_records(None)
+
+    def export_csv(self):
+        dest = filedialog.asksaveasfilename(defaultextension=".csv", filetypes=[("CSV files", "*.csv")])
+        if not dest:
+            return
+        conn = sqlite3.connect(DB_FILE)
+        cur = conn.cursor()
+        cur.execute("SELECT name, team, weight_class, wins, losses, points, notes FROM wrestlers ORDER BY id")
+        rows = cur.fetchall()
+        conn.close()
+        try:
+            with open(dest, "w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                writer.writerow(["Name", "Team", "WeightClass", "Wins", "Losses", "Points", "Notes"])
+                writer.writerows(rows)
+            messagebox.showinfo("Export complete", f"Data exported to {dest}")
+        except Exception as e:
+            messagebox.showerror("Export failed", str(e))
+
+    def clear_fields(self):
+        for e in self.entries.values():
+            e.delete(0, 'end')
+
+if __name__ == "__main__":
+    app = WrestlerTracker()
+    app.mainloop()
