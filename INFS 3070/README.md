@@ -1,30 +1,62 @@
-# Workspace for class INFS 3070
+# INFS 3070 - Python Programming Workspace
 
-## Week 1
+This repository contains coursework, assignments, and weekly practice files for INFS 3070.
 
-### Intro to the environment and jupyter
+## Course Structure
 
-#### Files Week 1
+### Assignments
+- **MarlinJaramilloHW1.ipynb** - First homework assignment
+- **homework2.ipynb** - Second homework assignment  
+- **homework3.ipynb** - Third homework assignment
+- **question1.csv** - Data file for assignments
+- **question2.csv** - Data file for assignments
 
-aug26.py
-test.py
-testj.ipynb
+### Weekly Materials
 
-## Week 2
+#### Week 1 - Intro to the environment and jupyter
+- `aug26.py`
+- `test.py` 
+- `testj.ipynb`
 
-### Intro to syntax
+#### Week 2 - Intro to syntax
+- `sep2.py`
+- `Week2.ipynb`
 
-#### Files Week 2
+#### Week 3 - User input and conditionals
+- `week3.ipynb`
 
-sep2.py
-Week2.ipynb
+#### Week 4 - Control structures and loops
+- `test.py`
+- `week4.ipynb`
 
-## Week 3
+#### Week 5 - Functions and modules
+- `week5.ipynb`
 
-### User input and conditionals
+#### Week 6 - File handling and text processing
+- `example.txt`
+- `week6.ipynb`
 
-#### Files Week 3
+#### Week 7 - Data structures
+- `week7.ipynb`
 
-week3.ipynb
+#### Week 8 - Advanced programming concepts
+- `week8.ipynb`
 
-## Week 4
+#### Week 9 - Data analysis fundamentals
+- `week9.ipynb`
+
+#### Week 10 - Data visualization and analysis
+- `week10.ipynb` - Hurricane data analysis with matplotlib
+
+#### Week 11 - Advanced data analysis
+- `week11.ipynb`
+
+### Data Files
+- Various CSV files and datasets used throughout the course
+
+## Technologies Used
+- Python 3.x
+- Jupyter Notebooks
+- pandas for data manipulation
+- matplotlib for data visualization
+- Various Python standard libraries
