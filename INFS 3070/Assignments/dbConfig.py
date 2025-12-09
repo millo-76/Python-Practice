@@ -1,11 +1,9 @@
 import mysql.connector
 
-
-def get_conn():
-
-    return {
-        'username': 'infscompany',
-        'password': 'yeadata', 
-        'host': '128.198.162.191',
-        'database': 'company'
-    }
+def create_conn():
+    return mysql.connector.connect(
+        host='128.198.162.191',
+        user='infscompany',
+        password='yeadata',
+        database='company'
+    )
