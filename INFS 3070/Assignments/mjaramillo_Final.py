@@ -7,17 +7,16 @@
     clear the values and insert the records into the appropriate database tables and fields.
 5. When you select "Show Sales Graph" a bar graph should appear in the application window that
     displays the total sales (revenue) for each product that has been entered.
-6. Once you have completed your application, clear all records in your database tables
-    and use your application to add the appropriate records.
 """
 
-import mysql.connector as mariadb
-from sqlalchemy import create_engine, text
+import tkinter
+#import mysql.connector as mariadb
+#from sqlalchemy import create_engine, text
 import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
-def get_conn_params():  # connection module 
+"""def get_conn_params():  # connection module 
     return {
         "host": "128.198.162.191",
         "user": "finalUser",
@@ -28,7 +27,43 @@ def get_conn_params():  # connection module
 params = get_conn_params()  # create varaible for get_conn_params module
 
 engine = create_engine("mysql+pymysql://{user}:{password}@{host}/{database}".format(**params))  # construct SQLAlchemy connection URL
+"""
 
+def gui():
+
+    main_window = tkinter.Tk()
+    main_window.title('Sales Entry')
+    main_window.geometry("800x600")
+    
+    input_label = tkinter.Label(main_window, text = 'Product Name')
+    input_label.pack()
+    input_entry = tkinter.Entry(main_window)
+    input_entry.pack()
+    
+    input_label = tkinter.Label(main_window, text = 'Product Price')
+    input_label.pack()    
+    input_entry = tkinter.Entry(main_window)
+    input_entry.pack()
+
+    input_label = tkinter.Label(main_window, text = 'Units Sold')
+    input_label.pack()
+    input_entry = tkinter.Entry(main_window)
+    input_entry.pack()
+
+    input_label = tkinter.Label(main_window, text = 'Sales Date (YYYY-MM-DD)')
+    input_label.pack()
+    input_entry = tkinter.Entry(main_window)
+    input_entry.pack()
+
+    button = tkinter.Button(main_window, text = 'Save Sale')
+    button.pack()
+
+    button = tkinter.Button(main_window, text = 'Show Sales Graph')
+    button.pack()
+        
+    tkinter.mainloop()
 
 if __name__=="__main__":
-    get_conn_params()
+   
+    #get_conn_params()
+    gui()
