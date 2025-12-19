@@ -15,7 +15,7 @@ from sqlalchemy import create_engine, text
 import pandas as pd
 import matplotlib.pyplot as plt
 
-engine = create_engine("mysql+pymysql://finalUser:itsover!@128.198.162.191/finaldb")
+engine = create_engine("mysql+pymysql://finalUser:itsover!@128.198.162.191/finaldb")    # Connects to the MySQL database
 
 def init_db():
     with engine.connect() as conn:
@@ -26,7 +26,7 @@ def init_db():
             productName VARCHAR(45),
             productPrice DECIMAL(8,2)
         )
-        """))
+        """))   # Creates the products table if it does not exist
 
         conn.execute(text("""
         CREATE TABLE IF NOT EXISTS mjarami8_sales (
@@ -35,7 +35,7 @@ def init_db():
             unitSales INT,
             salesDate DATE
         )
-        """))
+        """))   # Creates the sales table if it does not exist
 
 def gui():
     # Create method variables
@@ -92,31 +92,34 @@ def save_sale():
         result = conn.execute(text("""
             SELECT productID FROM mjarami8_products
             WHERE productName = :name
-        """), {"name": product_name_value}).fetchone()
+        """), {"name": product_name_value}).fetchone()  # Checks if the product already exists
 
         if result is None:
             conn.execute(text("""
                 INSERT INTO mjarami8_products (productName, productPrice)
                 VALUES (:name, :price)
-            """), {"name": product_name_value, "price": product_price_value})
+            """), {"name": product_name_value, "price": product_price_value})   # Inserts the new product into the database
             product_id = conn.execute(text("""
                 SELECT productID FROM mjarami8_products
                 WHERE productName = :name
-            """), {"name": product_name_value}).fetchone()[0]
+            """), {"name": product_name_value}).fetchone()[0]   # Retrieves the productID of the newly inserted product
         else:
-            product_id = result[0]
+            product_id = result[0]  # Retrieves the productID of the existing product
 
         conn.execute(text("""
             INSERT INTO mjarami8_sales (productID, unitSales, salesDate)
             VALUES (:productID, :unitSales, :salesDate)
-        """), {"productID": product_id, "unitSales": units_sold_value, "salesDate": sales_date_value})
+        """), {"productID": product_id, "unitSales": units_sold_value, "salesDate": sales_date_value})  # Inserts the sale into the database
 
         messagebox.showinfo("Success", "Sale saved successfully")
+
         # Clear the fields
         product_name.delete(0, tk.END)
         product_price.delete(0, tk.END)
         units_sold.delete(0, tk.END)
         sales_date.delete(0, tk.END)
+
+        product_name.focus_set()    # Sets the focus back to the product name entry field
 
 def show_sales_graph():
     query = """
@@ -125,7 +128,7 @@ def show_sales_graph():
     FROM mjarami8_products p
     JOIN mjarami8_sales s ON p.productID = s.productID
     GROUP BY p.productName
-    """
+    """    # Retrieves the total revenue for each product
 
     df = pd.read_sql_query(query, engine)
 
