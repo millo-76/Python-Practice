@@ -129,7 +129,7 @@ def show_sales_graph():
 
     df = pd.read_sql_query(query, engine)
 
-    df.plot(kind='bar', x='productName', y='revenue', legend=False, rot=45, figsize=(10,6), title="Total Sales by Product")
+    df.plot(kind='bar', x='productName', y='revenue', legend=False, rot=45, figsize=(12,8), title="Total Sales by Product")
     plt.gca().set_facecolor('lightblue')
     plt.gcf().canvas.manager.set_window_title("Sales Revenue by Product")
     plt.ylabel("Total Revenue")
