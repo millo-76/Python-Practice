@@ -25,33 +25,33 @@
 
 ## File Structure
 
-lol-win-predictor/
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── src/
-│   ├── config.py
-│   ├── main.py
-│
-│   ├── data_collection/
-│   │   ├── fetch_matches.py
-│   │   └── fetch_stats.py
-│
-│   ├── data_processing/
-│   │   ├── clean_data.py
-│   │   └── feature_engineering.py
-│
-│   ├── models/
-│   ├───└── xgboost_model.py
-│
-│   └── utils/
-│       ├── api_helpers.py
-│       └── logger.py
-│
-├── notebooks/
-│   └── eda.ipynb
-│
-├── requirements.txt
-└── README.md
+    lol-win-predictor/
+    │
+    ├── data/
+    │   ├── raw/
+    │   └── processed/
+    │
+    ├── src/
+    │   ├── config.py
+    │   ├── main.py
+    │
+    │   ├── data_collection/
+    │   │   ├── fetch_matches.py
+    │   │   └── fetch_stats.py
+    │
+    │   ├── data_processing/
+    │   │   ├── clean_data.py
+    │   │   └── feature_engineering.py
+    │
+    │   ├── models/
+    │   ├───└── xgboost_model.py
+    │
+    │   └── utils/
+    │       ├── api_helpers.py
+    │       └── logger.py
+    │
+    ├── notebooks/
+    │   └── eda.ipynb
+    │
+    ├── requirements.txt
+    └── README.md
