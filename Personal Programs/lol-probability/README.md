@@ -22,3 +22,36 @@
 
     This is where the machine learning comes in. The go-to tool is the scikit-learn library.
     Recommended Algorithm: Logistic Regression or XGBoost. XGBoost often performs better with this type of structured, tabular data.
+
+## File Structure
+
+lol-win-predictor/
+│
+├── data/
+│   ├── raw/
+│   └── processed/
+│
+├── src/
+│   ├── config.py
+│   ├── main.py
+│
+│   ├── data_collection/
+│   │   ├── fetch_matches.py
+│   │   └── fetch_stats.py
+│
+│   ├── data_processing/
+│   │   ├── clean_data.py
+│   │   └── feature_engineering.py
+│
+│   ├── models/
+│   ├───└── xgboost_model.py
+│
+│   └── utils/
+│       ├── api_helpers.py
+│       └── logger.py
+│
+├── notebooks/
+│   └── eda.ipynb
+│
+├── requirements.txt
+└── README.md
